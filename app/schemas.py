@@ -19,3 +19,11 @@ class BookOut(BaseModel):
 
     class Config:
         orm_mode=True
+
+class CategoryOut(BaseModel):
+
+    id: int
+    name: str
+
+    class Config:
+        orm_mode=True
