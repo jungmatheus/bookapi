@@ -11,19 +11,23 @@ class BookIn(BaseModel):
         orm_mode=True
 
 
-class BookOut(BaseModel):
-    title: str
-    category_id: int
-    created_at: datetime
-    id: int
-
-    class Config:
-        orm_mode=True
 
 class CategoryOut(BaseModel):
 
     id: int
     name: str
+
+    class Config:
+        orm_mode=True
+
+
+
+class BookOut(BaseModel):
+    title: str
+    category_id: int
+    created_at: datetime
+    id: int
+    category: CategoryOut
 
     class Config:
         orm_mode=True

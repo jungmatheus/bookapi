@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, status, HTTPException
+from fastapi import APIRouter, Depends, status, HTTPException, Response
 from sqlalchemy.orm import Session
 from ..database import get_db
 from .. import schemas, database_models
@@ -20,7 +20,7 @@ def get_books(db: Session = Depends(get_db)):
 def get_book(id: int, db: Session = Depends(get_db)):
     book = db.query(database_models.Book).filter(database_models.Book.id == id).first()
     if not book:
-        return HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Could not find the book you are looking for')
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Could not find the book you are looking for')
     return book
 
 
@@ -32,3 +32,25 @@ def create_book(book: schemas.BookIn, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(new_book)
     return new_book
+
+
+@router.put('/{id}', response_model=schemas.BookOut)
+def update_book(id: int, book: schemas.BookIn, db: Session = Depends(get_db)):
+    query = db.query(database_models.Book).filter(database_models.Book.id == id)
+    if not query.first():
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='The book you want to update does not exist')
+    query.update(book.dict(), synchronize_session=False)
+    db.commit()
+    return query.first()
+
+
+@router.delete('/{id}')
+def delete_book(id: int, db: Session = Depends(get_db)):
+    query = db.query(database_models.Book).filter(database_models.Book.id == id)
+
+    if not query.first():
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='The book you are trying to delete does not exist')
+    query.delete(synchronize_session=False)
+    db.commit()
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+    
