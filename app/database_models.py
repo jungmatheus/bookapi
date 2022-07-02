@@ -1,3 +1,4 @@
+from socketserver import ThreadingUnixDatagramServer
 from sqlalchemy import ForeignKey, Integer
 from .database import Base
 from sqlalchemy import Column, Integer, String, ForeignKey, TIMESTAMP
@@ -20,3 +21,12 @@ class Book(Base):
     category_id = Column(Integer, ForeignKey('categories.id', ondelete='CASCADE'), nullable=False)
     created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('CURRENT_TIMESTAMP'))
     category = relationship('Category')
+
+class User(Base):
+    __tablename__ = 'users'
+
+    id = Column(Integer, primary_key=True, nullable=False)
+    email = Column(String, nullable=False)
+    username = Column(String, nullable=False)
+    password = Column(String, nullable=False)
+    created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('CURRENT_TIMESTAMP'))

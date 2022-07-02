@@ -1,5 +1,5 @@
 
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from datetime import datetime
 
 
@@ -28,6 +28,17 @@ class BookOut(BaseModel):
     created_at: datetime
     id: int
     category: CategoryOut
+
+    class Config:
+        orm_mode=True
+
+class UserIn(BaseModel):
+
+    email: EmailStr
+    password: str
+    username: str
+    
+
 
     class Config:
         orm_mode=True
