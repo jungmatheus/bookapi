@@ -1,10 +1,11 @@
-from venv import create
+
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from .config import settings as s
 
 
-SQLALCHEMY_DATABASE_URL = f'postgresql://postgres:novaiunggames1.1@localhost/bookish'
+SQLALCHEMY_DATABASE_URL = f'postgresql://{s.DATABASE_USERNAME}:{s.DATABASE_PASSWORD}@{s.DATABASE_HOSTNAME}/{s.DATABASE_NAME}'
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
 

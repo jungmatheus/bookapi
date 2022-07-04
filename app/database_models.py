@@ -1,5 +1,5 @@
-from socketserver import ThreadingUnixDatagramServer
-from sqlalchemy import ForeignKey, Integer
+
+from sqlalchemy import Integer, ForeignKey
 from .database import Base
 from sqlalchemy import Column, Integer, String, ForeignKey, TIMESTAMP
 from sqlalchemy.sql.expression import text

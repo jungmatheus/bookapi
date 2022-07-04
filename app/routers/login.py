@@ -13,8 +13,8 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
     credentials =  db.query(database_models.User).filter(database_models.User.email == form_data.username).first()
     if not credentials or not utils.verify_password(form_data.password, credentials.password):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail='Invalid email or password')
-    token = oauth2.create_access_token({"user_id": credentials.id})
-    return {"acess_token": token, "token_type": "bearer"}
+    token = oauth2.create_access_token({"user_id": credentials.id, "username": credentials.username})
+    return {"access_token": token, "token_type": "bearer"}
     
 
 

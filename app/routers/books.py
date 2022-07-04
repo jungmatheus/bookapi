@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, status, HTTPException, Response
 from sqlalchemy.orm import Session
 from ..database import get_db
-from .. import schemas, database_models
+from .. import schemas, database_models, oauth2
 from typing import List
 
 
@@ -26,7 +26,8 @@ def get_book(id: int, db: Session = Depends(get_db)):
 
 
 @router.post('/', status_code=status.HTTP_201_CREATED, response_model=schemas.BookOut)
-def create_book(book: schemas.BookIn, db: Session = Depends(get_db)):
+def create_book(book: schemas.BookIn, db: Session = Depends(get_db), user: oauth2.get_current_user = Depends()):
+    print(user.id, user.username)
     new_book = database_models.Book(title=book.title, category_id=book.category_id)
     db.add(new_book)
     db.commit()
