@@ -1,4 +1,4 @@
-from this import s
+
 from pydantic import BaseSettings
 
 class Settings(BaseSettings):
