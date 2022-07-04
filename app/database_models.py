@@ -1,4 +1,5 @@
 
+from ast import For
 from sqlalchemy import Integer, ForeignKey
 from .database import Base
 from sqlalchemy import Column, Integer, String, ForeignKey, TIMESTAMP
@@ -21,6 +22,8 @@ class Book(Base):
     category_id = Column(Integer, ForeignKey('categories.id', ondelete='CASCADE'), nullable=False)
     created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('CURRENT_TIMESTAMP'))
     category = relationship('Category')
+    user_id = Column(Integer, ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
+    user = relationship('User')
 
 class User(Base):
     __tablename__ = 'users'
@@ -30,3 +33,4 @@ class User(Base):
     username = Column(String, nullable=False)
     password = Column(String, nullable=False)
     created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('CURRENT_TIMESTAMP'))
+

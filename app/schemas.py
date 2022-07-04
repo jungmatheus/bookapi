@@ -20,12 +20,21 @@ class CategoryOut(BaseModel):
     class Config:
         orm_mode=True
 
+class UserOut(BaseModel):
+    username: str
+    id: int
+
+    class Config:
+        orm_mode=True
+
+
 class BookOut(BaseModel):
     title: str
-    category_id: int
     created_at: datetime
     id: int
     category: CategoryOut
+    user: UserOut
+
 
     class Config:
         orm_mode=True
@@ -38,6 +47,7 @@ class UserIn(BaseModel):
 
     class Config:
         orm_mode=True
+
 
 class TokenData(BaseModel):
 

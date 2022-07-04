@@ -7,7 +7,7 @@ class Settings(BaseSettings):
     DATABASE_PASSWORD: str
     SECRET_KEY: str
     DATABASE_HOSTNAME: str
-    ACESS_TOKEN_EXPIRE_MINUTES: str
+    ACCESS_TOKEN_EXPIRE_MINUTES: int
     ALGORITHM: str
     DATABASE_PORT: int
 

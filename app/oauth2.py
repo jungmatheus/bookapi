@@ -10,11 +10,11 @@ oauth2_schema = OAuth2PasswordBearer(tokenUrl='login')
 
 SECRET_KEY = s.SECRET_KEY
 ALGORITHM = s.ALGORITHM
-ACESS_TOKEN_EXPIRE_MINUTES = s.ACESS_TOKEN_EXPIRE_MINUTES
+ACCESS_TOKEN_EXPIRE_MINUTES = s.ACCESS_TOKEN_EXPIRE_MINUTES
 
 def create_access_token(data: dict):
     to_encode = data.copy()
-    exp  = datetime.utcnow() + timedelta(minutes=ACESS_TOKEN_EXPIRE_MINUTES)
+    exp  = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     to_encode.update({"exp": exp})
     token = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return token
