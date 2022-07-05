@@ -24,6 +24,8 @@ class Book(Base):
     category = relationship('Category')
     user_id = Column(Integer, ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
     user = relationship('User')
+    author = Column(String, nullable=False)
+    number_of_pages = Column(Integer, nullable=False)
 
 class User(Base):
     __tablename__ = 'users'
@@ -34,3 +36,8 @@ class User(Base):
     password = Column(String, nullable=False)
     created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('CURRENT_TIMESTAMP'))
 
+class Vote(Base):
+    __tablename__ = 'votes'
+
+    user_id = Column(Integer, ForeignKey('users.id', ondelete='CASCADE'), primary_key=True, nullable=False)
+    book_id = Column(Integer, ForeignKey('books.id', ondelete='CASCADE'), primary_key=True, nullable=False)
