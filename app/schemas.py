@@ -23,6 +23,7 @@ class CategoryOut(BaseModel):
 class UserOut(BaseModel):
     username: str
     id: int
+    created_at: datetime
 
     class Config:
         orm_mode=True
