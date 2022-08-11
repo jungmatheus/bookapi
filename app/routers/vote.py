@@ -14,7 +14,7 @@ def vote(vote_info: schemas.VoteIn,db: Session = Depends(get_db), user: oauth2.g
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f'There is no book with an id of {vote_info.book_id}')
 
 
-    vote_row = db.query(database_models.Vote).filter(vote_info.book_id == database_models.Vote.book_id, user.id == database_models.Vote.user_id)
+    vote_row = db.query(database_models.Vote).filter(vote_info.book_id == database_models.Vote.book_id, user.user_id == database_models.Vote.user_id)
     if vote_row.first():
         if vote_info.vote_dir is False:
             vote_row.delete(synchronize_session=False)
@@ -26,7 +26,7 @@ def vote(vote_info: schemas.VoteIn,db: Session = Depends(get_db), user: oauth2.g
         if not vote_info.vote_dir:
             raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='You already have no vote on this book')
         else:
-            new_vote = database_models.Vote(user_id=user.id, book_id=vote_info.book_id)
+            new_vote = database_models.Vote(user_id=user.user_id, book_id=vote_info.book_id)
             db.add(new_vote)
             db.commit()
             return Response(status_code=status.HTTP_201_CREATED)

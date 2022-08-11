@@ -7,7 +7,7 @@ from ..database import get_db
 router = APIRouter(prefix='/users', tags=['Users'])
 
 
-@router.post('/')
+@router.post('/', status_code=status.HTTP_201_CREATED, response_model=schemas.UserOut)
 def create_user(user: schemas.UserIn, db: Session = Depends(get_db)):
 
     hashed_pwd = utils.hash_password(user.password)
@@ -15,7 +15,8 @@ def create_user(user: schemas.UserIn, db: Session = Depends(get_db)):
     new_user = database_models.User(**user.dict())
     db.add(new_user)
     db.commit()
-    return Response(status_code=status.HTTP_201_CREATED)
+    db.refresh(new_user)
+    return new_user
 
 @router.get('/{id}', response_model=schemas.UserOut)
 def get_user(id: int, db: Session = Depends(get_db)):

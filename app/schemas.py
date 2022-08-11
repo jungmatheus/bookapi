@@ -21,6 +21,7 @@ class CategoryOut(BaseModel):
         orm_mode=True
 
 class UserOut(BaseModel):
+    email: EmailStr
     username: str
     id: int
     created_at: datetime
@@ -60,9 +61,14 @@ class UserIn(BaseModel):
         orm_mode=True
 
 
-class TokenData(BaseModel):
+class Token(BaseModel):
 
-    id: int
+    access_token: str
+    token_type: str
+
+
+class TokenPayload(BaseModel):
+    user_id: int
     username: str
 
 

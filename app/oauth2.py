@@ -27,7 +27,7 @@ def verify_acess_token(token: str, credentials_exception):
     except JWTError:
         raise credentials_exception 
     
-    token_data = schemas.TokenData(id=id, username=username)
+    token_data = schemas.TokenPayload(user_id=id, username=username)
     return token_data
 
 def get_current_user(token: str = Depends(oauth2_schema)):
