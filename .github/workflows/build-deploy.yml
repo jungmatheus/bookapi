@@ -64,7 +64,7 @@ jobs:
           push: true
           tags: jungmatheus/book-api
           cache-from: type=registry, ref=${{secrets.DOCKER_HUB_USERNAME}}/book-api:buildcache
-          cache-to: type: registry, ref=${{secrets.DOCKER_HUB_USERNAME}}/book-api:buildache,mode=max
+          cache-to: type=registry, ref=${{secrets.DOCKER_HUB_USERNAME}}/book-api:buildache,mode=max
 
       
 
