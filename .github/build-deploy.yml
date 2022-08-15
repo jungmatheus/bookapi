@@ -1,5 +1,9 @@
 name: build and deploy app
-on: [push, pull-request]
+
+on:
+  push:
+    branches: [ "main" ]
+
 jobs:
   job1:
     runs_on: ubuntu-latest
