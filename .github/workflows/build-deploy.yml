@@ -21,6 +21,7 @@ jobs:
       - name: run tests
         run: |
           pip install pytest
+          cd app
           pytest --pyargs tests    
 
 
