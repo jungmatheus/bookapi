@@ -6,7 +6,7 @@ class Settings(BaseSettings):
     DATABASE_NAME: str
     DATABASE_PASSWORD: str
     SECRET_KEY: str
-    DATABASE_HOSTNAME: str
+    DATABASE_HOSTNAME: str | None = None
     ACCESS_TOKEN_EXPIRE_MINUTES: int
     ALGORITHM: str
     DATABASE_PORT: int
