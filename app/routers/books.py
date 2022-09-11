@@ -11,14 +11,14 @@ router = APIRouter(prefix='/books', tags=['Books'])
 
 
 @router.get('/', response_model=List[schemas.BookOut])
-def get_books(db: Session = Depends(get_db), user: oauth2.get_current_user = Depends()):
+def get_books(db: Session = Depends(get_db)):
     books = db.query(database_models.Book, func.count(database_models.Vote.book_id).label('votes')).join(database_models.Vote, 
     database_models.Book.id == database_models.Vote.book_id, isouter=True).group_by(database_models.Book.id).all()
     return books
 
 
 @router.get('/{id}', response_model=schemas.BookOut)
-def get_book(id: int, db: Session = Depends(get_db), user: oauth2.get_current_user = Depends()):
+def get_book(id: int, db: Session = Depends(get_db)):
     book = db.query(database_models.Book, func.count(database_models.Vote.book_id).label('votes')).join(database_models.Vote, 
     database_models.Book.id == database_models.Vote.book_id, isouter=True).group_by(database_models.Book.id).filter(database_models.Book.id == id).first()
     if not book:
